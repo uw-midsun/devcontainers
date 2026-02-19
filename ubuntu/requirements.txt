@@ -1,0 +1,12 @@
+scons<4.0
+virtualenv
+autopep8
+pylint
+cpplint
+python-can
+cantools
+Jinja2
+PyYAML
+pyserial
+sv-ttk
+pandas
