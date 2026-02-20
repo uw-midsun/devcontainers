@@ -1,16 +1,18 @@
-{pkgs, ...}:
+{ pkgs, ... }:
 let
   python-packages = with pkgs.python3Packages; [
-        autopep8
-        pylint
-        python-can
-        cantools
-        jinja2
-        pyyaml
-        pyserial
-        sv-ttk
-        pandas
+    autopep8
+    pylint
+    python-can
+    cantools
+    jinja2
+    pyyaml
+    pyserial
+    sv-ttk
+    pandas
   ];
+
+  python-interpreter = (pkgs.python3.withPackages (ps: python-packages));
 
   scons = pkgs.scons.overrideAttrs (old: {
     propagatedBuildInputs = old.propagatedBuildInputs ++ python-packages;
@@ -37,10 +39,14 @@ pkgs.dockerTools.buildLayeredImage {
       pkgs.sdl2-compat
       pkgs.cpplint
       pkgs.nlohmann_json
+      pkgs.qt6.full
+
+      pkgs.pkg-config
+      pkgs.autoconf
+      pkgs.libtool
 
       scons
-
-      (pkgs.python3.withPackages(ps: python-packages))
+      python-interpreter
     ];
 
     pathsToLink = [ "/bin" ];
@@ -52,6 +58,8 @@ pkgs.dockerTools.buildLayeredImage {
     WorkingDir = "/home/midsun";
     Env = [
       "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
+      "PYTHON=${python-interpreter}/bin/python"
+
     ];
   };
 
