@@ -21,5 +21,12 @@
         ];
       };
     });
+
+    packages = forAllSystems (system:
+    let
+      pkgs = buildNixpkgs system;
+    in {
+      default = pkgs.callPackage ./fwxvi-nix {};
+    });
   };
 }
