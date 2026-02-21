@@ -15,8 +15,9 @@ let
   python-interpreter = (pkgs.python3.withPackages (ps: python-packages));
 
   scons = pkgs.scons.overrideAttrs (old: {
-    propagatedBuildInputs = old.propagatedBuildInputs ++ python-packages;
+    propagatedBuildInputs = old.propagatedBuildInputs ++ [python-packages];
   });
+
 in
 pkgs.dockerTools.buildLayeredImage {
   name = "fwxvi-nix";
@@ -31,6 +32,7 @@ pkgs.dockerTools.buildLayeredImage {
       pkgs.wget
       pkgs.vim
       pkgs.git
+      pkgs.gnugrep
 
       pkgs.gcc-arm-embedded-13
       pkgs.clang
@@ -39,7 +41,6 @@ pkgs.dockerTools.buildLayeredImage {
       pkgs.sdl2-compat
       pkgs.cpplint
       pkgs.nlohmann_json
-      pkgs.qt6.full
 
       pkgs.pkg-config
       pkgs.autoconf
