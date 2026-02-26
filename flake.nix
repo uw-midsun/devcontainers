@@ -42,8 +42,7 @@
           pkgs = buildNixpkgs system;
         in
         rec {
-          default = fwxvi-nix;
-          fwxvi-nix = pkgs.callPackage ./fwxvi-nix { };
+          fwxvii = pkgs.callPackage ./fwxvii { };
         }
       );
     };
