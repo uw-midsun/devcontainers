@@ -1,0 +1,4 @@
+#!/bin/bash
+
+nix build .#fwxvii
+docker load < result
