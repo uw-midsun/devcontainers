@@ -10,7 +10,7 @@ function print_green() {
 set -euo pipefail
 
 PROJECT=${PROJECT:-}
-VERSION=${VERSION:-latest}
+TAGS=${TAGS:-}
 
 print_green "\nBuilding devcontainer image for the ${PROJECT} project.\n"
 
@@ -18,10 +18,8 @@ ${PROJECT}/build
 
 echo "Build sucessful!"
 
-TAG="ghcr.io/uw-midsun/devcontainers/${PROJECT}:${VERSION}"
+for tag in $TAGS; do
+    docker tag $PROJECT:latest $TAG
+    docker push $TAG
+done
 
-print_green "\nTagging image as ${TAG}.\n"
-
-docker tag $PROJECT:latest $TAG
-
-docker push $TAG
