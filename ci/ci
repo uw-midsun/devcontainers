@@ -24,4 +24,4 @@ print_green "\nTagging image as ${TAG}.\n"
 
 docker tag $PROJECT:latest $TAG
 
-docker push $TAG $PROJECT:latest
+docker push $TAG
