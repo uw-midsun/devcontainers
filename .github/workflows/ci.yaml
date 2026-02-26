@@ -18,6 +18,12 @@ jobs:
         name: Checkout Repository
         with:
           persist-credentials: false
+      - uses: docker/login-action@c94ce9fb468520275223c153574b00df6fe4bcc9
+        name: Container Registry Login
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - uses: cachix/install-nix-action@2126ae7fc54c9df00dd18f7f18754393182c73cd
         name: Install Nix
@@ -26,6 +32,5 @@ jobs:
       - name: Build and Tag Docker Image
         env:
           PROJECT: ${{ matrix.project }}
-          VERSION: ${{ github.ref }}
-        run: ./${{ matrix.project }}/build
-
+          VERSION: latest
+        run: ./ci/ci
