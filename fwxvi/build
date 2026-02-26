@@ -3,6 +3,6 @@
 set -euo pipefail
 pushd fwxvi
 
-docker build -f Containerfile -t fwxvi:latest
+docker build -f Containerfile -t fwxvi:latest .
 
 popd

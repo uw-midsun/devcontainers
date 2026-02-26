@@ -31,6 +31,7 @@
             buildInputs = with pkgs; [
               dive
               nixfmt-tree
+              zizmor
             ];
           };
         }
