@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    # branches: [main]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        project: [fwxvi, fwxvii]
+    steps:
+      - uses: actions/checkout@v5
+        name: Checkout Repository
+      - uses: cachix/install-nix-action@v31
+        name: Install Nix
+        with:
+          github_access_token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and Tag Docker Image
+        env:
+          PROJECT: ${{ matrix.project }}
+          VERSION: ${{ github.ref }}
+        run: ./${{ matrix.project }}/build
+
