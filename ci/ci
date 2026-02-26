@@ -16,10 +16,10 @@ print_green "\nBuilding devcontainer image for the ${PROJECT} project.\n"
 
 ${PROJECT}/build
 
-echo "Build sucessful!"
+print_green "\nBuild sucessful!\nPushing!"
 
 for tag in $TAGS; do
-    docker tag $PROJECT:latest $TAG
-    docker push $TAG
+    docker tag $PROJECT:latest $tag 
+    docker push $tag
 done
 
