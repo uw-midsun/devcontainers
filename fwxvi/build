@@ -7,6 +7,7 @@ docker buildx build \
        --platform linux/arm64,linux/amd64 \
        -f Containerfile \
        -t fwxvi:latest \
+       --load \
        .
 
 
