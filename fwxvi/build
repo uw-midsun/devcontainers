@@ -3,6 +3,16 @@
 set -euo pipefail
 pushd fwxvi
 
-docker build -f Containerfile -t fwxvi:latest .
+docker buildx build \
+       --platform linux/arm64,linux/amd64 \
+       -f Containerfile \
+       -t fwxvi:latest \
+       .
+
+
+for tag in $TAGS; do
+    docker tag fwxvi:latest $tag
+    docker push $tag
+done
 
 popd
