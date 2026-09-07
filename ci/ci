@@ -1,25 +1,8 @@
 #!/bin/bash
 
-function print_green() {
- local ANSI_GREEN="\033[32m"
- local ANSI_GREEN_END="\033[0m"
-
- echo -e "${ANSI_GREEN}${1}${ANSI_GREEN_END}"
-}
-
 set -euo pipefail
 
 PROJECT=${PROJECT:-}
 TAGS=${TAGS:-}
 
-print_green "\nBuilding devcontainer image for the ${PROJECT} project.\n"
-
 ${PROJECT}/build
-
-print_green "\nBuild sucessful!\nPushing!"
-
-for tag in $TAGS; do
-    docker tag $PROJECT:latest $tag 
-    docker push $tag
-done
-

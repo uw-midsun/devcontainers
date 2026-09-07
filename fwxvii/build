@@ -1,4 +1,11 @@
 #!/bin/bash
 
+TAGS=${TAGS:-}
+
 nix build .#fwxvii
 docker load < result
+
+for tag in $TAGS; do
+    docker tag fwxvii:latest $tag
+    docker push $tag
+done
