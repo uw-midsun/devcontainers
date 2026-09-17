@@ -36,15 +36,5 @@
           };
         }
       );
-
-      packages = forAllSystems (
-        system:
-        let
-          pkgs = buildNixpkgs system;
-        in
-        rec {
-          fwxvii = pkgs.callPackage ./fwxvii { };
-        }
-      );
     };
 }
