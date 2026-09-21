@@ -1,4 +1,4 @@
-name: Deploy
+name: Build & Push Docker Image
 
 on:
   push:
@@ -11,12 +11,8 @@ permissions:
   packages: write
 
 jobs:
-  ci:
-    name: Build and Push
+t  fwxvi:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        project: [fwxvi, fwxvii]
     steps:
       - uses: actions/checkout@v5
         name: Checkout Repository
@@ -36,7 +32,7 @@ jobs:
         uses: docker/metadata-action@c299e40c65443455700f0fdfc63efafe5b349051
         with:
           images: |
-            ghcr.io/uw-midsun/devcontainers/${{ matrix.project }}
+            ghcr.io/uw-midsun/devcontainers/fwxvi
           tags: |
             type=semver,pattern={{raw}}
             type=semver,pattern={{version}}
@@ -49,12 +45,11 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: cachix/install-nix-action@2126ae7fc54c9df00dd18f7f18754393182c73cd
-        name: Install Nix
+      - uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a
+        name: Docker Build & Push
         with:
-          github_access_token: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Build and Push Docker Image
-        env:
-          TAGS: ${{ steps.meta.outputs.tags }}
-        run: ./${{ matrix.project }}/build
+           push: true
+           tags: ${{ steps.meta.outputs.tags }}
+           context: ./fwxvi
+           file: ./fwxvi/Containerfile
+           platforms: linux/arm64, linux/amd64
