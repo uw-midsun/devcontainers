@@ -11,7 +11,7 @@ permissions:
   packages: write
 
 jobs:
-t  fwxvi:
+  fwxvi:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5

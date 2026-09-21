@@ -33,5 +33,7 @@ ENV PATH="/opt/venv/bin:$PATH"
 COPY ./requirements.txt /tmp/requirements.txt
 RUN python3 -m pip install --no-cache-dir -r /tmp/requirements.txt
 
+ENV SCONS_ENABLE_VIRTUALENV=1
+
 USER ubuntu
 CMD ["/bin/bash"]
